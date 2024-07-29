@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="calcularVeiculos()">Calcular Informações dos Veículos</button>
+
+    <script>
+        const veiculos = [
+            { marca: 'Toyota', modelo: 'Corolla', ano: 2015, valorCompra: 50000, valorAtual: 60000, cor: 'Prata' },
+            { marca: 'Honda', modelo: 'Civic', ano: 2018, valorCompra: 70000, valorAtual: 80000, cor: 'Preto' },
+            { marca: 'Ford', modelo: 'Focus', ano: 2012, valorCompra: 30000, valorAtual: 35000, cor: 'Branco' }
+        ];
+
+        const calcularLucro = valorCompra => valorCompra * 0.03;
+
+        const calcularIPVA = valorAtual => valorAtual * 0.04;
+
+        const calcularLicenciamento = ano => {
+            const anoAtual = new Date().getFullYear();
+            return (anoAtual - ano) <= 10 ? 160 : 0;
+        };
+
+        function calcularVeiculos() {
+            veiculos.forEach(veiculo => {
+                veiculo.lucro = calcularLucro(veiculo.valorCompra);
+                veiculo.ipva = calcularIPVA(veiculo.valorAtual);
+                veiculo.licenciamento = calcularLicenciamento(veiculo.ano);
+
+                console.log(
+                    "Marca: " + veiculo.marca + ", Modelo: " + veiculo.modelo + ", Ano: " + veiculo.ano +
+                    ", Cor: " + veiculo.cor + ", Valor de Compra: R$ " + veiculo.valorCompra.toFixed(2) +
+                    ", Valor Atual: R$ " + veiculo.valorAtual.toFixed(2) + ", Lucro: R$ " + veiculo.lucro.toFixed(2) +
+                    ", IPVA: R$ " + veiculo.ipva.toFixed(2) + ", Licenciamento: R$ " + veiculo.licenciamento.toFixed(2)
+                );
+            });
+        }
+    </script>
+    </script>
+</body>
+</html>
