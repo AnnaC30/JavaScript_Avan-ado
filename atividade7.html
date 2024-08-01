@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carros</title>
+</head>
+<body>
+    <button onclick="Carros()">Carros</button>
+    <script>
+        function Carros() {
+            const anoAtual = new Date().getFullYear();
+            const veiculos = [
+                { montadora: 'Honda', modelo: 'Civic', ano: 2019 },
+                { montadora: 'Ford', modelo: 'Focus', ano: 2023 },
+                { montadora: 'Nissan', modelo: 'Sentra', ano: 2024 }
+            ];
+
+            const carrosNovos = veiculos.filter(carro => (anoAtual - carro.ano) < 3);
+            carrosNovos.forEach(carro => console.log(carro.montadora));
+        }
+    </script>
+</body>
+</html>
