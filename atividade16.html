@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carros.2</title>
+</head>
+<body>
+    <input id="marca" placeholder="Marca">
+    <input id="modelo" placeholder="Modelo">
+    <input id="ano" placeholder="Ano">
+    <input id="preco" placeholder="Preço">
+    <input id="autonomia" placeholder="Autonomia (km)">
+    <button id="adicionar">Adicionar Carro Elétrico</button>
+
+    <ul id="carros"></ul>
+
+<script>
+    class Carro {
+        constructor(marca, modelo, ano, preco) {
+            this.marca = marca;
+            this.modelo = modelo;
+            this.ano = ano;
+            this.preco = preco;
+        }
+    }
+
+    class CarroEletrico extends Carro {
+        constructor(marca, modelo, ano, preco, autonomia) {
+            super(marca, modelo, ano, preco);
+            this.autonomia = autonomia;
+        }
+    }
+
+    const carros = [];
+    const botaoAdicionar = document.getElementById('adicionar');
+    const listaCarros = document.getElementById('carros');
+
+    botaoAdicionar.addEventListener('click', () => {
+        const carro = new CarroEletrico(
+            document.getElementById('marca').value,
+            document.getElementById('modelo').value,
+            document.getElementById('ano').value,
+            document.getElementById('preco').value,
+            document.getElementById('autonomia').value
+        );
+        carros.push(carro);
+        const item = document.createElement('li');
+        item.textContent = `${carro.marca} ${carro.modelo}, Ano: ${carro.ano}, Preço: R$ ${carro.preco}, Autonomia: ${carro.autonomia} km`;
+        listaCarros.appendChild(item);
+    });
+</script>
+</body>
+</html>
