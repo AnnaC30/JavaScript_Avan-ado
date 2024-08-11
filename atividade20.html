@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requisição à API</title>
+</head>
+<body>
+    <button id="fetchButton">Fazer Requisição</button>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('fetchButton').onclick = function() {
+            fetch('https://reqbin.com/echo/get/json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('response').textContent = 'Erro: ' + error;
+                });
+        };
+    </script>
+</body>
+</html>

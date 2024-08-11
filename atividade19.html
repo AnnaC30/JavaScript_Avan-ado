@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulação com setInterval</title>
+</head>
+<body>
+    <button id="simulateButton">Iniciar Simulação</button>
+    
+    <div id="serverResponse"></div>
+
+    <script>
+        var intervalId;
+
+        document.getElementById('simulateButton').onclick = function() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+                this.textContent = "Iniciar Simulação";
+                document.getElementById('serverResponse').textContent = "Simulação parada.";
+            } else {
+                intervalId = setInterval(function() {
+                    document.getElementById('serverResponse').textContent = "Dados do servidor: " + new Date().toLocaleTimeString();
+                }, 2000);
+                this.textContent = "Parar Simulação";
+            }
+        };
+    </script>
+</body>
+</html>

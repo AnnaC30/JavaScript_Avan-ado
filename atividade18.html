@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Card</title>
+</head>
+<body>
+    <input type="text" id="pokemonName" placeholder="Nome do Pokémon">
+    <button onclick="buscarPokemon()">Buscar</button>
+    
+    <div id="pokemonInfo"></div>
+
+    <script>
+        function buscarPokemon() {
+            var nomePokemon = document.getElementById('pokemonName').value.toLowerCase();
+            fetch('https://pokeapi.co/api/v2/pokemon/' + nomePokemon)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(pokemon) {
+                    var infoDiv = document.getElementById('pokemonInfo');
+                    var img = '<img src="' + pokemon.sprites.front_default + '" alt="' + pokemon.name + '">';
+                    var nome = '<p>' + pokemon.name + '</p>';
+                    infoDiv.innerHTML = img + nome;
+                })
+                .catch(function() {
+                    document.getElementById('pokemonInfo').innerHTML = '<p>Pokémon não encontrado.</p>';
+                });
+        }
+    </script>
+</body>
+</html>
