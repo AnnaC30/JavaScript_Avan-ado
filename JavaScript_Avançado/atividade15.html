@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carros</title>
+</head>
+<body>
+    <input id="marca" placeholder="Marca">
+    <input id="modelo" placeholder="Modelo">
+    <input id="ano" placeholder="Ano">
+    <input id="preco" placeholder="Preço">
+    <button id="adicionar">Adicionar Carro</button>
+
+    <ul id="carros"></ul>
+
+    <script>
+        class Carro {
+            constructor(marca, modelo, ano, preco) {
+                this.marca = marca;
+                this.modelo = modelo;
+                this.ano = ano;
+                this.preco = preco;
+            }
+        }
+
+        const carros = [];
+        const botaoAdicionar = document.getElementById('adicionar');
+        const listaCarros = document.getElementById('carros');
+
+        botaoAdicionar.addEventListener('click', () => {
+            const carro = new Carro(
+                document.getElementById('marca').value,
+                document.getElementById('modelo').value,
+                document.getElementById('ano').value,
+                document.getElementById('preco').value
+            );
+            carros.push(carro);
+            const item = document.createElement('li');
+            item.textContent = `${carro.marca} ${carro.modelo}, Ano: ${carro.ano}, Preço: R$ ${carro.preco}`;
+            listaCarros.appendChild(item);
+        });
+    </script>
+</body>
+</html>

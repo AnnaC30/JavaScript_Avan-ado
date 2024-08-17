@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizador</title>
+</head>
+<body>
+    <h1>Oferta de Doces de Leite</h1>
+    <p>Aproveite a oferta em:</p>
+    <p id="temporizador">04:00</p>
+    <p id="encerrada" style="display: none;">Oferta encerrada</p>
+
+    <script>
+        let tempoRestante = 4 * 60;
+
+        function atualizarTemporizador() {
+            const minutos = Math.floor(tempoRestante / 60);
+            const segundos = tempoRestante % 60;
+            document.getElementById('temporizador').textContent =
+                `${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+
+            if (tempoRestante > 0) {
+                tempoRestante--;
+            } else {
+                clearInterval(intervalo);
+                document.getElementById('temporizador').style.display = 'none';
+                document.getElementById('encerrada').style.display = 'block';
+            }
+        }
+
+        const intervalo = setInterval(atualizarTemporizador, 1000);
+    </script>
+</body>
+</html>

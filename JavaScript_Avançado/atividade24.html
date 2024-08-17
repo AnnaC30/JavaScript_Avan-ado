@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E e OU</title>
+</head>
+<body>
+    <h1 id="boasVindas"></h1>
+    <script>
+        const nome = prompt("Qual é o seu nome?");
+        const mensagem = (nome !== null && nome.trim() !== "") ? "Bem-vindo(a), " + nome + "!" : "Bem-vindo(a), visitante!";
+
+        document.getElementById("boasVindas").textContent = mensagem;
+    </script>
+</body>
+</html>
