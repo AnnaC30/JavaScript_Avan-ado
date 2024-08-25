@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicativo de Tarefas</title>
+    <link rel="stylesheet" href="Aula_7.css">
+</head>
+<body>
+    <main>
+        <h1>Aplicativo de Tarefas</h1>
+        <hr>
+        <input id="titulo" placeholder="Título da tarefa">
+        <input id="descricao" placeholder="Descrição">
+        <button id="adicionar">Adicionar tarefa</button>
+        <ul id="tarefas"></ul>
+    </main>
+
+    <script>
+        const apiUrl = 'http://localhost:3000/tarefas';
+
+        function atualizarListaTarefas() {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(tarefas => {
+                    const lista = document.getElementById('tarefas');
+                    lista.innerHTML = '';
+
+                    tarefas.forEach(tarefa => {
+                        const item = document.createElement('li');
+
+                        const tituloElement = document.createElement('strong');
+                        tituloElement.textContent = `Título: ${tarefa.titulo}`;
+                        
+                        const descricaoElement = document.createElement('p');
+                        descricaoElement.textContent = `Descrição: ${tarefa.descricao}`;
+                        
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.checked = tarefa.concluida;
+                        checkbox.addEventListener('change', () => {
+                            tarefa.concluida = checkbox.checked;
+                            atualizarTarefa(tarefa);
+                        });
+
+                        const editarButton = document.createElement('button');
+                        editarButton.textContent = 'Editar';
+                        editarButton.addEventListener('click', () => {
+                            const novoTitulo = prompt('Novo título:', tarefa.titulo);
+                            const novaDescricao = prompt('Nova descrição:', tarefa.descricao);
+                            if (novoTitulo !== null && novaDescricao !== null) {
+                                tarefa.titulo = novoTitulo;
+                                tarefa.descricao = novaDescricao;
+                                atualizarTarefa(tarefa);
+                            }
+                        });
+
+                        const excluirButton = document.createElement('button');
+                        excluirButton.textContent = 'Excluir';
+                        excluirButton.addEventListener('click', () => {
+                            excluirTarefa(tarefa.id);
+                        });
+
+                        item.appendChild(tituloElement);
+                        item.appendChild(descricaoElement);
+                        item.appendChild(checkbox);
+                        item.appendChild(editarButton);
+                        item.appendChild(excluirButton);
+
+                        lista.appendChild(item);
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar tarefas:', error));
+        }
+
+        function adicionarTarefa(tarefa) {
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(tarefa)
+            })
+            .then(response => response.json())
+            .then(() => atualizarListaTarefas())
+            .catch(error => console.error('Erro ao adicionar tarefa:', error));
+        }
+
+        function atualizarTarefa(tarefa) {
+            fetch(`${apiUrl}/${tarefa.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(tarefa)
+            })
+            .catch(error => console.error('Erro ao atualizar tarefa:', error));
+        }
+
+        function excluirTarefa(id) {
+            fetch(`${apiUrl}/${id}`, {
+                method: 'DELETE'
+            })
+            .then(() => atualizarListaTarefas())
+            .catch(error => console.error('Erro ao excluir tarefa:', error));
+        }
+
+        document.getElementById('adicionar').addEventListener('click', () => {
+            const titulo = document.getElementById('titulo').value;
+            const descricao = document.getElementById('descricao').value;
+
+            if (titulo && descricao) {
+                const tarefa = { titulo, descricao, concluida: false };
+
+                adicionarTarefa(tarefa);
+
+                document.getElementById('titulo').value = '';
+                document.getElementById('descricao').value = '';
+            } else {
+                alert('Por favor, preencha o título e a descrição da tarefa.');
+            }
+        });
+
+        atualizarListaTarefas();
+    </script>
+</body>
+</html>
