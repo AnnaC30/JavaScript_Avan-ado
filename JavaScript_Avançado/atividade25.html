@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista</title>
+</head>
+    <body>
+        <ul id="nome-lista"></ul>
+    
+        <script>
+            const nomesCompletos = [
+                "Ana Clara Silva",
+                "Carlos Pereira de Souza",
+                "Jorge Oliveira Lima",
+                "Enzo Pedro da Costa"
+            ];
+    
+            function exibirNomes() {
+                const lista = document.getElementById("nome-lista");
+    
+                nomesCompletos.forEach(nomeCompleto => {
+                    const li = document.createElement("li");
+                    li.textContent = nomeCompleto;
+                    lista.appendChild(li);
+    
+                    let primeiroNome = '';
+                    let encontradoPrimeiroEspaco = false;
+                    let totalSobrenomes = 0;
+    
+                    for (let i = 0; i < nomeCompleto.length; i++) {
+                        const caracter = nomeCompleto[i];
+    
+                        if (caracter === ' ') {
+                            totalSobrenomes++;
+                            if (!encontradoPrimeiroEspaco) {
+                                encontradoPrimeiroEspaco = true;
+                            }
+                        } else if (!encontradoPrimeiroEspaco) {
+                            primeiroNome += caracter;
+                        }
+                    }
+    
+                    console.log(`Primeiro nome: ${primeiroNome}, Total de sobrenomes: ${totalSobrenomes}`);
+                });
+            }
+    
+            // Chamar a função para exibir os nomes
+            exibirNomes();
+        </script>
+</body>
+</html>
